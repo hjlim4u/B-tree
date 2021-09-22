@@ -5,11 +5,11 @@ import pickle
 
 class Node(object):
     def __init__(self, parent=None):
-        self.keys = []
-        self.values = []
-        self.parent = parent
-
-    def index(self, key):
+        self.keys = []                  #key array
+        self.values = []                #child node pointer array
+        self.parent = parent            #parent pointer
+        
+    def index(self, key):               #find the index of the pointer where specific key belongs
         for idx, item in enumerate(self.keys):
             if item > key:
                 return idx
@@ -27,7 +27,7 @@ class Node(object):
         self.values.insert(i+1, value)
 
 
-    def borrow(self,i, prevornext):
+    def borrow(self,i, prevornext):             #borrow a key-value pair from adjacent node
         if prevornext=='prev':
             prevnode=self.parent.values[i-1]
             key=prevnode.keys.pop()
@@ -47,7 +47,8 @@ class Node(object):
             self.parent.keys[i]=key
 
         return self.parent
-    def merge(self, idx, prevornext):
+    
+    def merge(self, idx, prevornext):           
 
         if prevornext=='prev':
             prevnode=self.parent.values[idx-1]
@@ -70,7 +71,7 @@ class Node(object):
 
         return self.parent
 
-    def split(self):
+    def split(self):                        #split node into an half size and return the key and value of right part of the node
         mid =math.ceil(len(self.keys)/2)
         right = Node(self.parent)
         right.keys = self.keys[mid:]
@@ -87,7 +88,7 @@ class Node(object):
 
 
 
-class Leaf(Node):
+class Leaf(Node):                               
     def __init__(self, parent = None, next_node=None, prev_node=None):
         super().__init__(parent)
         self.next = next_node
@@ -175,7 +176,7 @@ class Bplustree(object):
                 print(node.tostring())
             node = node.values[node.index(key)]
         return node
-    def replace(self, replacekey, key):
+    def replace(self, replacekey, key):     #replace a key in node which has been deleted by a deletion method with a new key
         node=self.root
         while replacekey not in node.keys:
             node = node.values[node.index(replacekey)]
@@ -183,7 +184,7 @@ class Bplustree(object):
                 return
         node.keys[node.keys.index(replacekey)]=key
 
-    def ismin(self, node):
+    def ismin(self, node):                  #decide whether node needs to borrow or merge with another node 
         if isinstance(node, Leaf):
             if node == self.root:
                 return False
@@ -193,7 +194,7 @@ class Bplustree(object):
             return len(node.values) < 2
         return len(node.values) < self.nodeminimum
 
-    def rangedsearch(self, start, end):
+    def rangedsearch(self, start, end):         
         leaf=self.findleaf(start)
         while True:
             try:
@@ -204,7 +205,7 @@ class Bplustree(object):
             except:
                 break
 
-    def merge(self, leaf, prevornext):
+    def merge(self, leaf, prevornext):                      
         node=leaf.merge(prevornext)
         while self.ismin(node) and node is not self.root:
             prevornext, k = self.prevornext(node)
@@ -219,7 +220,7 @@ class Bplustree(object):
                 else:
                     node=node.merge(k, prevornext)
 
-    def prevornext(self, node):
+    def prevornext(self, node):                 #decide the direction of merge or borrow operation
         if node is self.root:
             return
         idx=node.parent.values.index(node)
@@ -232,11 +233,11 @@ class Bplustree(object):
         else:
             return 'next', idx
 
-    def borrow(self, leaf, prevornext):
+    def borrow(self, leaf, prevornext):             
         replacekey, key = leaf.borrow(prevornext)
         self.replace(replacekey, key)
 
-    def deletion(self, key):
+    def deletion(self, key):                    #delete specific key and value from a tree and replace the key when the key is in the parent node
         leaf = self.findleaf(key)
         i, delkey, delvalue = leaf.delete(key)
         if i==0:
@@ -300,6 +301,7 @@ def deletion(tree, key):
     tree.deletion(int(key))
 
 
+#command line operation -file creation(index.dat) -singlekeysearch -insert key -delete key
 if __name__ == '__main__':
     if sys.argv[1] == '-c':
         creation(sys.argv[2], sys.argv[3])
