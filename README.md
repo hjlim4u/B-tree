@@ -17,6 +17,7 @@ Leaf에 위치한 키와 value를 삭제, 삭제 이후 Leaf가 최소 수치보
 
 # Internal Structure
 Class Node:
+
 def index(key): key보다   큰    item의    인덱스를    반환
 
 def tostring(): node의    key들을   string으로    반환
