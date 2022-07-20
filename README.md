@@ -18,15 +18,15 @@ Command: python bptree.py -c index.dat size
 Command: python bptree.py -i index.dat input.csv  
 
 # Deletion
-Leaf에 위치한 키와 value를 삭제, 삭제 이후 Leaf가 최소 수치보다 적다면 오른쪽이나 왼쪽 중 키가 많은 Leaf에서 하나의 key value를 빌려온다. 만약 삭제할 키가 leaf의 첫 키인 경우 상위 노 드 중 삭제할 키를 leaf의 두번째 key로 replace.  만약 왼쪽 오른쪽 둘다 현재 leaf와 합쳐도 키의 최대 개수를 넘지않는 경우, 키가 그나마 많은 쪽과 merge를 진행.  상위 노드 또한 leaf와 같은 메커니즘으로 웬만하면 트리의 구조를 변하게 하는 merge를 안하려고 하는 게으른(?) 트리이다.
+Leaf에 위치한 키와 value를 삭제, 삭제 이후 Leaf가 최소 수치보다 적다면 오른쪽이나 왼쪽 중 키가 많은 Leaf에서 하나의 key value를 빌려온다. 만약 삭제할 키가 leaf의 첫 키인 경우 상위 노 드 중 삭제할 키를 leaf의 두번째 key로 replace.  만약 왼쪽 오른쪽 둘다 현재 leaf와 합쳐도 키의 최대 개수를 넘지않는 경우, 키가 그나마 많은 쪽과 merge를 진행.  상위 노드 또한 leaf와 같은 메커니즘으로 웬만하면 트리의 구조를 변하게 하는 merge를 안하려고 하는 게으른(?) 트리이다.  
 Command: python bptree.py -d index.dat delete.csv  
 
 # Rangesearch
-해당    키를    leaf에서    찾고    end보다    크거나   트리    끝에    도달    시    실행    종료 
+해당    키를    leaf에서    찾고    end보다    크거나   트리    끝에    도달    시    실행    종료  
 Command: python bptree.py -r index.dat startkey endkey
 
 # Singlesearch 
-해당    키를    루트에서부터   시작하여    Leaf까지    탐색을    하면서    방문한    노드를    출력 
+해당    키를    루트에서부터   시작하여    Leaf까지    탐색을    하면서    방문한    노드를    출력  
 Command: python bptree.py -s index.dat (keys to search) 
 
 # Internal Structure
