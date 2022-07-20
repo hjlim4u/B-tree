@@ -18,6 +18,7 @@ Leaf에 위치한 키와 value를 삭제, 삭제 이후 Leaf가 최소 수치보
 # Internal Structure
 Class Node:
 def index(key): key보다   큰    item의    인덱스를    반환
+
 def tostring(): node의    key들을   string으로    반환
 def isfull(): 키의    개수가   최대   개수를    넘는지   여부    검사
 def nodeinsert(key,value): leaf가    아닌    node에    key,value 삽입
