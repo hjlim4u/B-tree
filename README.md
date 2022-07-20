@@ -16,31 +16,33 @@ Leaf에 위치한 키와 value를 삭제, 삭제 이후 Leaf가 최소 수치보
 해당    키를    루트에서부터   시작하여    Leaf까지    탐색을    하면서    방문한    노드를    출력 
 
 # Internal Structure
-Class Node:\n
-def index(key): key보다   큰    item의    인덱스를    반환
+Class Node:  
+def index(key): key보다   큰    item의    인덱스를    반환  
+def tostring(): node의    key들을   string으로    반환  
+def isfull(): 키의    개수가   최대   개수를    넘는지   여부    검사  
+def nodeinsert(key,value): leaf가    아닌    node에    key,value 삽입  
+def borrow(idx, prevornext): idx 부모의    몇번째    포인터   자신을    가리키고    있는지prevornext: 왼쪽    오른쪽    진행    여부    결정, 왼쪽이나    오른쪽    노드에서      키, pointer쌍    가지고    오고   난 후   부모노드    반환  
+def merge(idx, prevornext): borrow함수    parameter와    동일    왼쪽이나   오른쪽    노드와    merge 진행    후 부모노드    반환 
 
-def tostring(): node의    key들을   string으로    반환
-def isfull(): 키의    개수가   최대   개수를    넘는지   여부    검사
-def nodeinsert(key,value): leaf가    아닌    node에    key,value 삽입
-def borrow(idx, prevornext): idx 부모의    몇번째    포인터   자신을    가리키고    있는지prevornext: 왼쪽    오른쪽    진행    여부    결정, 왼쪽이나    오른쪽    노드에서    키, pointer쌍    가지고    오고   난 후   부모노드    반환
-def merge(idx, prevornext): borrow함수    parameter와    동일    왼쪽이나   오른쪽    노드와    merge 진행    후 부모노드    반환
-class Leaf():
-def leafinsert(key,value): key value쌍    Leaf에    삽입
-def delete(key): Leaf에서    key 삭제
-def borrow(prevornext) 왼쪽   오른쪽    중    key개수가   많은    리프로부터    key, value 빌려옴
-def merge(prevornext) 왼쪽   오른쪽    key 개수가    많은   리프와    merge
-def leafsplit() leaf가    넘칠   때   split
-class Bplustree():
-def findleaf(key, singlekeysearch=None) 해당키가    위치할    혹은    위치한    leaf 찾기   singlekeysearch일 경우    탐색한    경로의    node의   key들    출력
-def replace(replacekey, key): leaf의    키가    삭제될    경우    상위노드에    해당키가    있을    경우    다른    키로 대체
-def ismin(node) 해당    node가    최소개수보다   적은지    판별
-def rangedsearch(start, end) start end사이   key value쌍   출력
-def merge(leaf, prevornext): leaf의    merge에서부터   시작해서    전체적인    merge작업   수행
-leaf merge-> node borrow 안되면    merge
-def prevornext(node) node의   merge나    borrow 방향    결정   prevornext반환
-def borrow(leaf, prevornext) leaf borrow진행
-def deletion(key):  트리의    전체적인    삭제작업을    진행    leaf에서    key, value쌍    삭제->  상위노드에서 해당    키    삭제->leaf-borrow         ->node borrow 안되면    merge
--안되면    merge->node borrow 안되면    merge
-def treeinsert(key, value)  트리의 전체적인 입력 작업 진행, leafinsert(key, value)-> 넘치는지 여부확인-> split -> 상위    노드에   삽입    -> 상위노드    넘치는지    여부    검사-> 반복
-Compile instruction 
-반드시    input.csv delete.csv는   소스파일(.py)과    같은    디렉토리(Source)에    있어야   한다. 항상    creation 명령을    먼저, deletion이나    search하기   전에는    insertion을    진행
+class Leaf():  
+def leafinsert(key,value): key value쌍    Leaf에    삽입  
+def delete(key): Leaf에서    key 삭제  
+def borrow(prevornext) 왼쪽   오른쪽    중    key개수가   많은    리프로부터    key, value 빌려옴  
+def merge(prevornext) 왼쪽   오른쪽    key 개수가    많은   리프와    merge  
+def leafsplit() leaf가    넘칠   때   split  
+
+class Bplustree():  
+def findleaf(key, singlekeysearch=None) 해당키가    위치할    혹은    위치한    leaf 찾기   singlekeysearch일 경우    탐색한    경로의    node의   key들    출력  
+def replace(replacekey, key): leaf의    키가    삭제될    경우    상위노드에    해당키가    있을    경우    다른    키로 대체  
+def ismin(node) 해당    node가    최소개수보다   적은지    판별  
+def rangedsearch(start, end) start end사이   key value쌍   출력  
+def merge(leaf, prevornext): leaf의    merge에서부터   시작해서    전체적인    merge작업   수행  
+leaf merge-> node borrow 안되면    merge  
+def prevornext(node) node의   merge나    borrow 방향    결정   prevornext반환  
+def borrow(leaf, prevornext) leaf borrow진행  
+def deletion(key):  트리의    전체적인    삭제작업을    진행    leaf에서    key, value쌍    삭제->  상위노드에서 해당    키    삭제->leaf-borrow         ->node borrow 안되면    merge  
+-안되면    merge->node borrow 안되면    merge  
+def treeinsert(key, value)  트리의 전체적인 입력 작업 진행, leafinsert(key, value)-> 넘치는지 여부확인-> split -> 상위    노드에   삽입    -> 상위노드    넘치는지    여부    검사-> 반복  
+
+Compile instruction   
+반드시    input.csv delete.csv는   소스파일(.py)과    같은    디렉토리(Source)에    있어야   한다. 항상    creation 명령을    먼저, deletion이나    search하기   전에는    insertion을    진행  
